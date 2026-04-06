@@ -13,7 +13,6 @@ const projects = [
       'Генеративный дизайн экосистемы автоматизации. Управление визуальной стратегией бренда со 100-летней&nbsp;историей.',
     tools: ['Figma', 'Kandinsky', 'PowerPoint'],
     accent: 'var(--accent-lime)',
-    slideCount: 8,
     images: Array.from({length: 8}, (_, i) => `/images/presentations/mzta/${i + 1}.jpg`),
   },
   {
@@ -23,7 +22,6 @@ const projects = [
       'Упаковка сложного технического контента. Создание базы 20+ адаптируемых слайдов и единого визуального стиля.',
     tools: ['Figma', 'PowerPoint', 'Illustrator'],
     accent: 'var(--accent-cyan)',
-    slideCount: 20,
     images: Array.from({length: 5}, (_, i) => `/images/presentations/rtk/${i + 1}.jpg`),
   },
   {
@@ -33,7 +31,6 @@ const projects = [
       'Финансовые питч-деки для привлечения раундов. Структурирование данных и нарратива.',
     tools: ['PowerPoint', 'Figma', 'Midjourney'],
     accent: 'var(--accent-magenta)',
-    slideCount: 15,
     images: Array.from({length: 12}, (_, i) => `/images/presentations/invest/${i + 1}.jpg`),
   },
   {
@@ -43,7 +40,6 @@ const projects = [
       'Методология и визуальные материалы для офлайн-курсов по промышленной автоматизации.',
     tools: ['Figma', 'Kandinsky', 'Illustrator'],
     accent: 'var(--accent-orange)',
-    slideCount: 24,
     images: Array.from({length: 7}, (_, i) => `/images/presentations/courses/${i + 1}.jpg`),
   },
 ];
@@ -122,7 +118,7 @@ export default function Presentations() {
                 isHovered={hoveredCard === project.id} 
                 accent={project.accent} 
                 images={(project as any).images} 
-                slideCount={project.slideCount}
+                slideCount={(project as any).images.length}
               />
 
               {/* Title */}
