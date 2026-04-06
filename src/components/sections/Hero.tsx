@@ -189,7 +189,7 @@ export default function Hero() {
           zIndex: 2,
         }}
       >
-        <span className="text-label" style={{ minWidth: '120px' }}>© 2025 KHAIMIN</span>
+        <span className="text-label" style={{ minWidth: '120px' }}>© 2026 KHAIMIN</span>
         <span className="text-label hide-on-mobile" style={{ textAlign: 'center' }}>
           THREE.JS // WEBGL // REACT
         </span>

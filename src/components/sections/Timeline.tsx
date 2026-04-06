@@ -20,7 +20,7 @@ const timelineData = [
     tags: ['PowerPoint', 'Illustrator', 'B2B'],
   },
   {
-    year: '2025',
+    year: '2026',
     title: 'МАДИ — Инженер-автоматизатор',
     description:
       'Технологические процессы и автоматизация. Фундамент инженерного мышления.',

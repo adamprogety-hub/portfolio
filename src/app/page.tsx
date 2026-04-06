@@ -46,7 +46,7 @@ export default function Home() {
       {/* ─── FOOTER ─── */}
       <footer className="site-footer">
         <span className="text-label">
-          © 2025 ИЛЬЯ ХАЙМИН — ВСЕ ПРАВА ЗАЩИЩЕНЫ
+          © 2026 ИЛЬЯ ХАЙМИН — ВСЕ ПРАВА ЗАЩИЩЕНЫ
         </span>
         <span
           className="text-label"
