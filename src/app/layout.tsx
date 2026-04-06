@@ -1,0 +1,47 @@
+import type { Metadata } from 'next';
+import { Space_Grotesk, JetBrains_Mono } from 'next/font/google';
+import './globals.css';
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-space-grotesk',
+  weight: ['400', '500', '600', '700'],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-jetbrains-mono',
+  weight: ['400', '500', '600', '700'],
+});
+
+import CookieBanner from '@/components/ui/CookieBanner';
+import ScrollProgress from '@/components/ui/ScrollProgress';
+import Header from '@/components/ui/Header';
+import CustomCursor from '@/components/ui/CustomCursor';
+
+export const metadata: Metadata = {
+  title: 'Илья Хаймин — Генеративный дизайнер & Инженер',
+  description:
+    'Портфолио генеративного дизайнера презентаций и веб-разработчика. Three.js, WebGL, AI-driven design.',
+};
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <html lang="ru">
+      <body
+        className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} noise-overlay`}
+        style={{ fontFamily: 'var(--font-body)' }}
+      >
+        <CustomCursor />
+        <ScrollProgress />
+        <Header />
+        {children}
+        <CookieBanner />
+      </body>
+    </html>
+  );
+}
