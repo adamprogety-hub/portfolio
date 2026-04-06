@@ -51,16 +51,16 @@ export default function Preloader() {
           }}
         >
           {/* Terminal Console Output */}
-          <div className="p-8 mb-16 flex flex-col items-start gap-2">
+          <div className="w-full max-w-7xl mx-auto px-6 md:px-12 mb-16 flex flex-col items-start gap-2">
             {lines.map((line, i) => (
               <motion.div 
                 key={i}
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.1 }}
-                className="font-mono text-xs md:text-sm tracking-wider text-white/70"
+                className="font-mono text-xs md:text-sm tracking-wider text-white/70 shadow-sm"
               >
-                <span className="text-[var(--accent-cyan)] mr-4">&gt;_</span>
+                <span className="text-[var(--accent-cyan)] mr-4 font-bold opacity-80">&gt;_</span>
                 {line}
               </motion.div>
             ))}
@@ -70,7 +70,7 @@ export default function Preloader() {
               <motion.div
                 animate={{ opacity: [1, 0] }}
                 transition={{ repeat: Infinity, duration: 0.7, ease: "linear" }}
-                className="w-3 h-4 bg-[var(--accent-cyan)] mt-1 ml-6"
+                className="w-3 h-4 bg-[var(--accent-cyan)] mt-1 ml-[2rem]"
               />
             )}
           </div>
