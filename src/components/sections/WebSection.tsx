@@ -1,7 +1,7 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { useState, Suspense } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useState, Suspense, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { PortfolioScene, GosLendScene, AspScene } from '../3d/WebScenes';
 
@@ -43,6 +43,30 @@ const webProjects = [
     videoSrc: '/projects/asp.mp4',
   },
 ];
+
+// Lazy loader prevents multiple WebGL contexts from crashing mobile devices
+function LazyProjectCanvas({ project, hoveredCard, renderScene }: any) {
+  const ref = useRef(null);
+  // Mount the heavy 3D canvas only when it gets close to the viewport
+  const isInView = useInView(ref, { margin: '400px' });
+
+  return (
+    <div ref={ref} style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none' }}>
+      {isInView && (
+        <Canvas
+          style={{ position: 'absolute', inset: 0, pointerEvents: 'auto' }}
+          camera={{ position: [0, 0, 6], fov: 45 }}
+          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+          dpr={[1, 1.2]} // Capped to 1.2 to prevent thermal throttling on mobile Safari
+        >
+          <Suspense fallback={null}>
+            {renderScene(project.id, hoveredCard === project.id)}
+          </Suspense>
+        </Canvas>
+      )}
+    </div>
+  );
+}
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -161,21 +185,12 @@ export default function WebSection() {
                   </span>
                 </div>
 
-                {/* 3D Interactive Scene */}
-                <Canvas
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    zIndex: 1,
-                  }}
-                  camera={{ position: [0, 0, 6], fov: 45 }}
-                  gl={{ antialias: true, alpha: true }}
-                  dpr={[1, 1.5]}
-                >
-                  <Suspense fallback={null}>
-                    {renderScene(project.id, hoveredCard === project.id)}
-                  </Suspense>
-                </Canvas>
+                {/* 3D Interactive Scene (Lazy Loaded for Mobile Performance) */}
+                <LazyProjectCanvas 
+                  project={project} 
+                  hoveredCard={hoveredCard} 
+                  renderScene={renderScene} 
+                />
               </div>
 
               {/* Content */}
