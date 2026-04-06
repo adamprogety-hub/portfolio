@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 const navLinks = [
@@ -14,6 +14,7 @@ const navLinks = [
 export default function Header() {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,8 +25,9 @@ export default function Header() {
   }, []);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
+    <>
+      <motion.header
+        initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       style={{
@@ -97,15 +99,100 @@ export default function Header() {
           </a>
         ))}
       </nav>
+      {/* MOBILE MENU TOGGLE */}
+      <button
+        className="header-mobile-toggle"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        style={{
+          fontFamily: 'var(--font-mono)',
+          fontSize: '0.75rem',
+          fontWeight: 800,
+          background: 'none',
+          border: '1px solid var(--border)',
+          color: isMobileMenuOpen ? 'var(--accent-cyan)' : 'var(--fg)',
+          padding: '0.3rem 0.8rem',
+          cursor: 'pointer',
+          letterSpacing: '0.1em',
+          transition: 'all 0.3s ease',
+          display: 'none', // handled by media query
+        }}
+      >
+        {isMobileMenuOpen ? '[ CLOSE ]' : '[ MENU ]'}
+      </button>
 
-      {/* Add raw CSS for hiding nav links on small screens to prevent overlap */}
+      {/* CSS FOR RESPONSIVE VISIBILITY */}
       <style>{`
         @media (max-width: 768px) {
-          .header-nav {
-            display: none !important;
-          }
+          .header-nav { display: none !important; }
+          .header-mobile-toggle { display: block !important; }
         }
       `}</style>
     </motion.header>
+
+    {/* FULL-SCREEN MOBILE OVERLAY */}
+    <AnimatePresence>
+      {isMobileMenuOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: '-100%' }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: '-100%' }}
+          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 8800, // Below header
+            background: 'var(--bg)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '2.5rem',
+            padding: '2rem',
+          }}
+        >
+          {navLinks.map((link, i) => (
+            <motion.a
+              key={link.name}
+              href={link.href}
+              onClick={() => setIsMobileMenuOpen(false)}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -40 }}
+              transition={{ delay: 0.1 + i * 0.1, duration: 0.5, ease: 'easeOut' }}
+              style={{
+                fontFamily: 'var(--font-heading)',
+                fontSize: 'clamp(2.5rem, 8vw, 4rem)',
+                fontWeight: 900,
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                color: 'var(--fg)',
+                letterSpacing: '-0.02em',
+                lineHeight: 1,
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-cyan)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--fg)')}
+            >
+              {link.name}
+            </motion.a>
+          ))}
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
+            style={{ 
+              position: 'absolute', 
+              bottom: '2rem', 
+              fontFamily: 'var(--font-mono)', 
+              fontSize: '0.7rem', 
+              color: 'var(--accent-lime)' 
+            }}
+          >
+            SYS_MENU // READY
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+    </>
   );
 }
