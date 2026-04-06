@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import SlidePreview from '../ui/SlidePreview';
+import Lightbox from '../ui/Lightbox';
 
 const projects = [
   {
@@ -62,6 +63,7 @@ const cardVariants = {
 
 export default function Presentations() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [activeProject, setActiveProject] = useState<any | null>(null);
 
   return (
     <section
@@ -104,6 +106,7 @@ export default function Presentations() {
               viewport={{ once: true, margin: '-50px' }}
               variants={cardVariants}
               className="brutal-card presentation-card"
+              onClick={() => setActiveProject(project)}
               onMouseEnter={() => setHoveredCard(project.id)}
               onMouseLeave={() => setHoveredCard(null)}
               style={{
@@ -174,6 +177,12 @@ export default function Presentations() {
           ))}
         </div>
       </div>
+      <Lightbox
+        images={activeProject?.images || []}
+        title={activeProject?.title || ''}
+        isOpen={!!activeProject}
+        onClose={() => setActiveProject(null)}
+      />
     </section>
   );
 }
