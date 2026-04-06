@@ -54,6 +54,9 @@ export default function Hero() {
           opacity: 0.65,
         }}
       >
+        {/* Mobile highly compressed version (~4MB) */}
+        <source src="/hero-bg-mobile.mp4" type="video/mp4" media="(max-width: 768px)" />
+        {/* Desktop premium version (~55MB) */}
         <source src="/hero-bg.mp4" type="video/mp4" />
       </video>
 
