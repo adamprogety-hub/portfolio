@@ -64,6 +64,31 @@ export default function Lightbox({ images, title, isOpen, onClose }: LightboxPro
             flexDirection: 'column',
           }}
         >
+          <style>{`
+            .lightbox-top-title { display: block; }
+            .lightbox-nav-btn {
+              position: absolute;
+              top: 50%;
+              transform: translateY(-50%);
+              z-index: 10;
+            }
+            .lightbox-nav-prev { left: 2rem; }
+            .lightbox-nav-next { right: 2rem; }
+            @media (max-width: 768px) {
+              .lightbox-top-title { display: none; } /* Hide title on small screens */
+              .lightbox-nav-btn {
+                top: auto;
+                bottom: -3.5rem; /* Push down to bottom bar area */
+                transform: none;
+                width: 40px !important;
+                height: 40px !important;
+                padding: 0 !important;
+              }
+              .lightbox-nav-prev { left: 1rem; }
+              .lightbox-nav-next { right: 1rem; }
+            }
+          `}</style>
+
           {/* TOP BAR */}
           <div style={{
             display: 'flex',
@@ -73,7 +98,7 @@ export default function Lightbox({ images, title, isOpen, onClose }: LightboxPro
             borderBottom: '1px solid var(--border)',
           }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: '1rem' }}>
-              <h3 style={{ 
+              <h3 className="lightbox-top-title" style={{ 
                 fontFamily: 'var(--font-mono)', 
                 fontSize: '0.8rem', 
                 fontWeight: 800, 
@@ -114,15 +139,14 @@ export default function Lightbox({ images, title, isOpen, onClose }: LightboxPro
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '2rem',
+            padding: '5vw',
+            minHeight: 0, /* CRITICAL for flex children to allow overflow control */
           }}>
             {/* Nav Left */}
             <button
               onClick={handlePrev}
+              className="lightbox-nav-btn lightbox-nav-prev"
               style={{
-                position: 'absolute',
-                left: '2rem',
-                zIndex: 10,
                 fontFamily: 'var(--font-mono)',
                 fontSize: '1rem',
                 fontWeight: 800,
@@ -168,10 +192,8 @@ export default function Lightbox({ images, title, isOpen, onClose }: LightboxPro
             {/* Nav Right */}
             <button
               onClick={handleNext}
+              className="lightbox-nav-btn lightbox-nav-next"
               style={{
-                position: 'absolute',
-                right: '2rem',
-                zIndex: 10,
                 fontFamily: 'var(--font-mono)',
                 fontSize: '1rem',
                 fontWeight: 800,

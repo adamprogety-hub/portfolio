@@ -14,7 +14,7 @@ const projects = [
     tools: ['Figma', 'Kandinsky', 'PowerPoint'],
     accent: 'var(--accent-lime)',
     slideCount: 8,
-    images: Array.from({length: 8}, (_, i) => `/images/presentations/mzta/${i + 1}.png`),
+    images: Array.from({length: 8}, (_, i) => `/images/presentations/mzta/${i + 1}.jpg`),
   },
   {
     id: 'rtk',
@@ -24,7 +24,7 @@ const projects = [
     tools: ['Figma', 'PowerPoint', 'Illustrator'],
     accent: 'var(--accent-cyan)',
     slideCount: 20,
-    images: Array.from({length: 5}, (_, i) => `/images/presentations/rtk/${i + 1}.png`),
+    images: Array.from({length: 5}, (_, i) => `/images/presentations/rtk/${i + 1}.jpg`),
   },
   {
     id: 'invest',
@@ -34,7 +34,7 @@ const projects = [
     tools: ['PowerPoint', 'Figma', 'Midjourney'],
     accent: 'var(--accent-magenta)',
     slideCount: 15,
-    images: Array.from({length: 12}, (_, i) => `/images/presentations/invest/${i + 1}.png`),
+    images: Array.from({length: 12}, (_, i) => `/images/presentations/invest/${i + 1}.jpg`),
   },
   {
     id: 'courses',
@@ -44,7 +44,7 @@ const projects = [
     tools: ['Figma', 'Kandinsky', 'Illustrator'],
     accent: 'var(--accent-orange)',
     slideCount: 24,
-    images: Array.from({length: 7}, (_, i) => `/images/presentations/courses/${i + 1}.png`),
+    images: Array.from({length: 7}, (_, i) => `/images/presentations/courses/${i + 1}.jpg`),
   },
 ];
 

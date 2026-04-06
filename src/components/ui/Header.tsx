@@ -183,15 +183,19 @@ export default function Header() {
             transition={{ delay: 0.7, duration: 0.5 }}
             style={{
               display: 'flex',
-              gap: '2rem',
+              gap: '1rem',
+              flexWrap: 'wrap',
+              justifyContent: 'center',
               marginTop: 'auto', // Pushes to the bottom
               marginBottom: '2rem',
+              padding: '0 1rem',
             }}
           >
             {[
-              { label: 'TG', url: 'https://t.me/PureAura' },
-              { label: 'GH', url: 'https://github.com/PureAura797' },
-              { label: 'MAIL', url: 'mailto:contact@khaimin.ru' }
+              { label: 'TG', url: 'https://t.me/asphxdel' },
+              { label: 'MAX', url: 'https://max.ru/u/f9LHodD0cOLEAEG1ML1Kb6x0hwUhaitgr4dsB3wLArlv_Mv31pgEbufpBx8' },
+              { label: 'MAIL', url: 'mailto:i@asphxdel.ru' },
+              { label: 'PHONE', url: 'tel:+79772662007' }
             ].map((contact, idx) => (
               <a
                 key={contact.label}
