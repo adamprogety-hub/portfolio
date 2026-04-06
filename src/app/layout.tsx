@@ -18,6 +18,7 @@ import CookieBanner from '@/components/ui/CookieBanner';
 import ScrollProgress from '@/components/ui/ScrollProgress';
 import Header from '@/components/ui/Header';
 import CustomCursor from '@/components/ui/CustomCursor';
+import Preloader from '@/components/ui/Preloader';
 
 export const metadata: Metadata = {
   title: 'Илья Хаймин — Генеративный дизайнер & Инженер',
@@ -36,6 +37,7 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} noise-overlay`}
         style={{ fontFamily: 'var(--font-body)' }}
       >
+        <Preloader />
         <CustomCursor />
         <ScrollProgress />
         <Header />
