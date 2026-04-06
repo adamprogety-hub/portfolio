@@ -176,19 +176,44 @@ export default function Header() {
             </motion.a>
           ))}
 
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            style={{ 
-              position: 'absolute', 
-              bottom: '2rem', 
-              fontFamily: 'var(--font-mono)', 
-              fontSize: '0.7rem', 
-              color: 'var(--accent-lime)' 
+          {/* CONTACTS BLOCK */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
+            style={{
+              display: 'flex',
+              gap: '2rem',
+              marginTop: 'auto', // Pushes to the bottom
+              marginBottom: '2rem',
             }}
           >
-            SYS_MENU // READY
+            {[
+              { label: 'TG', url: 'https://t.me/PureAura' },
+              { label: 'GH', url: 'https://github.com/PureAura797' },
+              { label: 'MAIL', url: 'mailto:contact@khaimin.ru' }
+            ].map((contact, idx) => (
+              <a
+                key={contact.label}
+                href={contact.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: 'var(--font-mono)',
+                  fontSize: '0.9rem',
+                  fontWeight: 800,
+                  color: 'var(--fg)',
+                  textDecoration: 'none',
+                  borderBottom: '1px solid var(--accent-cyan)',
+                  paddingBottom: '0.2rem',
+                  transition: 'color 0.2s',
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent-cyan)')}
+                onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--fg)')}
+              >
+                [{contact.label}]
+              </a>
+            ))}
           </motion.div>
         </motion.div>
       )}
