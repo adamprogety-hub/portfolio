@@ -124,8 +124,8 @@ export default function Hero() {
                 lineHeight: 1.6,
               }}
             >
-              Генеративный дизайнер &<br />
-              Инженер визуальных коммуникаций
+              Делаю малый бизнес<br />
+              неотличимым от крупного
             </motion.p>
 
             {/* CTA */}
@@ -191,7 +191,7 @@ export default function Hero() {
       >
         <span className="text-label" style={{ minWidth: '120px' }}>© 2026 KHAIMIN</span>
         <span className="text-label hide-on-mobile" style={{ textAlign: 'center' }}>
-          THREE.JS // WEBGL // REACT
+          САЙТЫ // ПРЕЗЕНТАЦИИ // 3D
         </span>
         <span className="text-label" style={{ minWidth: '120px', textAlign: 'right' }}>SCROLL ↓</span>
       </div>

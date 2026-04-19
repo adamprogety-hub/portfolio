@@ -148,6 +148,8 @@ export default function Header() {
             alignItems: 'center',
             gap: '2.5rem',
             padding: '2rem',
+            paddingTop: '120px', // Clear the fixed header + breathing room
+            overflowY: 'auto',
           }}
         >
           {navLinks.map((link, i) => (

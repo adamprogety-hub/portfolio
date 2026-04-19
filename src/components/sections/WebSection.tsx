@@ -9,10 +9,11 @@ const webProjects = [
   {
     id: 'web3d-portfolio',
     title: 'ПОРТФОЛИО: BRUTALIST EDITION',
-    subtitle: 'Kinematic WebGL & Motion Design',
+    subtitle: 'WebGL & Framer Motion',
+    scope: 'Дизайн / Код / 3D / Хостинг',
     description:
-      'Персональный B2B манифест. Жесткий индустриальный брутализм, сочетающий тяжелый видео-продакшен и интерактивную WebGL архитектуру. Реализация высокоточных 3D-механизмов, сложной пружинной кинематики и физически корректных материалов (оптическое стекло, титан) через React Three Fiber.',
-    stack: ['Next.js 14', 'Three.js / R3F', 'Framer Motion', 'WebGL Kinematics', 'Vercel'],
+      'Этот сайт. Персональное портфолио в индустриальном брутализме с интерактивными 3D-сценами на React Three Fiber, покадровыми анимациями и видеобэкграундами. Полностью адаптивная вёрстка, кастомный курсор и превью презентаций.',
+    stack: ['Next.js', 'React Three Fiber', 'Framer Motion', 'Tailwind', 'Vercel'],
     url: '/', // Current site
     accent: 'var(--accent-cyan)',
     displayUrl: 'khaimin.ru',
@@ -20,10 +21,11 @@ const webProjects = [
   },
   {
     id: 'gos-lend',
-    title: 'GOS_LEND: B2B ФЛАГМАН',
-    subtitle: 'Bento UI System & Интерактивное 3D',
+    title: 'ЗЕЛЁНЫЙ КОНТУР',
+    subtitle: 'Лендинг дезинсекции & арбористики',
+    scope: 'Дизайн / Код / Логотип / Копирайтинг / Домен / Хостинг',
     description:
-      'Премиальный лендинг для промышленного сектора. Разработка архитектуры Bento-grid, интеграция сложных интерактивных 3D-капсул с механической магнитной левитацией и GSAP-анимаций для максимального эстетического вовлечения B2B-аудитории.',
+      'Премиальный лендинг для компании по обработке земельных участков от клещей, борщевика и вредителей. 10 услуг, интерактивный квиз-калькулятор, секция команды и отзывов, Bento-grid UI, мобильный sticky CTA и SEO-оптимизация под Москву и МО.',
     stack: ['Next.js', 'React Three Fiber', 'GSAP', 'Tailwind', 'Supabase'],
     url: 'https://green-space-five.vercel.app/',
     accent: 'var(--accent-lime)',
@@ -32,14 +34,15 @@ const webProjects = [
   },
   {
     id: 'asp-cleaning',
-    title: 'ASP: LEAD-GEN ПЛАТФОРМА',
-    subtitle: 'High-Speed SSR & 3D Визуализация',
+    title: 'АУРАЧИСТОТЫ.РФ',
+    subtitle: 'Экстренный клининг 24/7',
+    scope: 'Дизайн / Код / Логотип / Копирайтинг / Домен / Хостинг',
     description:
-      'Экстремально быстрый продукт для ниши экстренных услуг. Строгий UX/UI, 152-ФЗ compliance, внедрение кинематической 3D-визуализации многосегментного сонара для вау-эффекта и микроразметка для агрессивного SEO-ранжирования.',
-    stack: ['Next.js 14', 'Supabase', 'Three.js', 'SSR', 'Tailwind'],
+      'Сайт для компании экстренной уборки после смерти, пожара и затопления. Тёмный премиальный дизайн, 6 направлений услуг, протокол работы, блок «дилетанты = угроза» для формирования доверия, форма экстренной связи и Schema.org разметка.',
+    stack: ['Next.js', 'Supabase', 'Framer Motion', 'SSR', 'Tailwind'],
     url: 'https://www.xn--80aayyhihbc6bxc.xn--p1ai/',
     accent: 'var(--accent-magenta)',
-    displayUrl: 'чистота-и-порядок.рф',
+    displayUrl: 'аурачистоты.рф',
     videoSrc: '/projects/asp.mp4',
   },
 ];
@@ -231,6 +234,25 @@ export default function WebSection() {
                   >
                     {project.description}
                   </p>
+
+                  {/* Scope — full-cycle indicator */}
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      fontSize: '0.65rem',
+                      letterSpacing: '0.08em',
+                      textTransform: 'uppercase',
+                      color: project.accent,
+                      marginBottom: '1.2rem',
+                      padding: '0.4rem 0.7rem',
+                      border: `1px solid ${project.accent}33`,
+                      background: `${project.accent}08`,
+                      width: 'fit-content',
+                      lineHeight: 1.4,
+                    }}
+                  >
+                    ◆ {project.scope}
+                  </div>
 
                   {/* Stack tags */}
                   <div

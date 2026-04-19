@@ -21,9 +21,9 @@ import CustomCursor from '@/components/ui/CustomCursor';
 import Preloader from '@/components/ui/Preloader';
 
 export const metadata: Metadata = {
-  title: 'Илья Хаймин — Генеративный дизайнер & Инженер',
+  title: 'Илья Хаймин — Сайты и презентации для бизнеса',
   description:
-    'Портфолио генеративного дизайнера презентаций и веб-разработчика. Three.js, WebGL, AI-driven design.',
+    'Делаю малый бизнес неотличимым от крупного. Сайты под ключ с 3D и WebGL, презентации для B2B, AI-дизайн. Москва.',
 };
 
 export default function RootLayout({

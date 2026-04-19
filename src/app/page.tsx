@@ -21,8 +21,8 @@ export default function Home() {
 
       {/* ─── CTA: After presentations ─── */}
       <CTABanner
-        text="Нужна презентация, которая закрывает сделки?"
-        buttonText="Обсудить проект"
+        text="Презентация, после которой конкуренты нервничают"
+        buttonText="Обсудить"
         href="https://t.me/asphxdel"
         accent="var(--accent-lime)"
       />
@@ -31,8 +31,8 @@ export default function Home() {
 
       {/* ─── CTA: After web section ─── */}
       <CTABanner
-        text="Хотите сайт с 3D и WebGL, который впечатляет?"
-        buttonText="Заказать сайт"
+        text="Сайт под ключ — от дизайна до хостинга. Без посредников"
+        buttonText="Заказать"
         href="https://t.me/asphxdel"
         accent="var(--accent-cyan)"
       />
