@@ -31,7 +31,7 @@ const webProjects = [
     url: 'https://portfolio-37do.vercel.app',
     accent: 'var(--accent-lime)',
     displayUrl: 'portfolio-37do.vercel.app',
-    images: Array.from({length: 5}, (_, i) => `/images/web/green/${i + 1}.jpg`),
+    images: Array.from({length: 4}, (_, i) => `/images/web/green/${i + 1}.jpg`),
   },
   {
     id: 'asp-cleaning',
