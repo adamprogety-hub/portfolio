@@ -1,9 +1,7 @@
 'use client';
 
-import { motion, useInView } from 'framer-motion';
-import { useState, Suspense, useRef } from 'react';
-import { Canvas } from '@react-three/fiber';
-import { PortfolioScene, GosLendScene, AspScene, KomegaScene } from '../3d/WebScenes';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const webProjects = [
   {
@@ -17,7 +15,7 @@ const webProjects = [
     url: '/', // Current site
     accent: 'var(--accent-cyan)',
     displayUrl: 'khaimin.ru',
-    videoSrc: '/projects/portfolio.mp4',
+    screenshot: '/projects/screenshots/portfolio.jpg',
   },
   {
     id: 'gos-lend',
@@ -30,7 +28,7 @@ const webProjects = [
     url: 'https://portfolio-37do.vercel.app',
     accent: 'var(--accent-lime)',
     displayUrl: 'portfolio-37do.vercel.app',
-    videoSrc: '/projects/gos-lend.mp4',
+    screenshot: '/projects/screenshots/green.jpg',
   },
   {
     id: 'asp-cleaning',
@@ -43,7 +41,7 @@ const webProjects = [
     url: 'https://portfolio-b2bo.vercel.app',
     accent: 'var(--accent-magenta)',
     displayUrl: 'portfolio-b2bo.vercel.app',
-    videoSrc: '/projects/asp.mp4',
+    screenshot: '/projects/screenshots/aura.jpg',
   },
   {
     id: 'komega-lab',
@@ -56,33 +54,9 @@ const webProjects = [
     url: 'https://komega.vercel.app',
     accent: 'var(--accent-cyan)',
     displayUrl: 'komega.vercel.app',
-    videoSrc: '/projects/komega.mp4',
+    screenshot: '/projects/screenshots/komega.jpg',
   },
 ];
-
-// Lazy loader prevents multiple WebGL contexts from crashing mobile devices
-function LazyProjectCanvas({ project, hoveredCard, renderScene }: any) {
-  const ref = useRef(null);
-  // Mount the heavy 3D canvas only when it gets close to the viewport
-  const isInView = useInView(ref, { margin: '400px' });
-
-  return (
-    <div ref={ref} style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none' }}>
-      {isInView && (
-        <Canvas
-          style={{ position: 'absolute', inset: 0, pointerEvents: 'auto' }}
-          camera={{ position: [0, 0, 6], fov: 45 }}
-          gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
-          dpr={[1, 1.2]} // Capped to 1.2 to prevent thermal throttling on mobile Safari
-        >
-          <Suspense fallback={null}>
-            {renderScene(project.id, hoveredCard === project.id)}
-          </Suspense>
-        </Canvas>
-      )}
-    </div>
-  );
-}
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -99,28 +73,6 @@ const cardVariants = {
 
 export default function WebSection() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
-  const [clicks, setClicks] = useState<Record<string, number>>({});
-
-  const handlePreviewClick = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setClicks(prev => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
-  };
-
-  const renderScene = (projectId: string, isHovered: boolean) => {
-    const clickSignal = clicks[projectId] || 0;
-    switch (projectId) {
-      case 'web3d-portfolio':
-        return <PortfolioScene isHovered={isHovered} clickSignal={clickSignal} />;
-      case 'gos-lend':
-        return <GosLendScene isHovered={isHovered} clickSignal={clickSignal} />;
-      case 'asp-cleaning':
-        return <AspScene isHovered={isHovered} clickSignal={clickSignal} />;
-      case 'komega-lab':
-        return <KomegaScene isHovered={isHovered} clickSignal={clickSignal} />;
-      default:
-        return null;
-    }
-  };
 
   return (
     <section
@@ -166,11 +118,10 @@ export default function WebSection() {
               onMouseEnter={() => setHoveredCard(project.id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
-              {/* Screenshot placeholder (now interactive) */}
+              {/* Screenshot Preview */}
               <div 
                 className="web-project-preview" 
-                style={{ position: 'relative', overflow: 'hidden', cursor: 'pointer' }}
-                onClick={(e) => handlePreviewClick(project.id, e)}
+                style={{ position: 'relative', overflow: 'hidden' }}
               >
                 {/* Decorative browser chrome */}
                 <div
@@ -186,6 +137,8 @@ export default function WebSection() {
                     padding: '0 1rem',
                     gap: '0.5rem',
                     zIndex: 10,
+                    background: 'rgba(0, 0, 0, 0.6)',
+                    backdropFilter: 'blur(10px)',
                   }}
                 >
                   <div style={{ width: 8, height: 8, background: '#FF5F57' }} />
@@ -203,12 +156,29 @@ export default function WebSection() {
                   </span>
                 </div>
 
-                {/* 3D Interactive Scene (Lazy Loaded for Mobile Performance) */}
-                <LazyProjectCanvas 
-                  project={project} 
-                  hoveredCard={hoveredCard} 
-                  renderScene={renderScene} 
-                />
+                {/* Screenshot Image with hover zoom */}
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    overflow: 'hidden',
+                  }}
+                >
+                  <img
+                    src={project.screenshot}
+                    alt={`${project.title} — превью сайта`}
+                    loading="lazy"
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      objectPosition: 'top center',
+                      transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease',
+                      transform: hoveredCard === project.id ? 'scale(1.05)' : 'scale(1)',
+                      filter: hoveredCard === project.id ? 'brightness(1.1)' : 'brightness(0.85)',
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Content */}
