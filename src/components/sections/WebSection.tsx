@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
+import WebPreview from '../ui/WebPreview';
+import Lightbox from '../ui/Lightbox';
+
 const webProjects = [
   {
     id: 'web3d-portfolio',
@@ -15,7 +18,7 @@ const webProjects = [
     url: '/', // Current site
     accent: 'var(--accent-cyan)',
     displayUrl: 'khaimin.ru',
-    screenshot: '/projects/screenshots/portfolio.jpg',
+    images: Array.from({length: 4}, (_, i) => `/images/web/portfolio/${i + 1}.jpg`),
   },
   {
     id: 'gos-lend',
@@ -28,7 +31,7 @@ const webProjects = [
     url: 'https://portfolio-37do.vercel.app',
     accent: 'var(--accent-lime)',
     displayUrl: 'portfolio-37do.vercel.app',
-    screenshot: '/projects/screenshots/green.jpg',
+    images: Array.from({length: 5}, (_, i) => `/images/web/green/${i + 1}.jpg`),
   },
   {
     id: 'asp-cleaning',
@@ -41,7 +44,7 @@ const webProjects = [
     url: 'https://portfolio-b2bo.vercel.app',
     accent: 'var(--accent-magenta)',
     displayUrl: 'portfolio-b2bo.vercel.app',
-    screenshot: '/projects/screenshots/aura.jpg',
+    images: Array.from({length: 4}, (_, i) => `/images/web/aura/${i + 1}.jpg`),
   },
   {
     id: 'komega-lab',
@@ -54,7 +57,7 @@ const webProjects = [
     url: 'https://komega.vercel.app',
     accent: 'var(--accent-cyan)',
     displayUrl: 'komega.vercel.app',
-    screenshot: '/projects/screenshots/komega.jpg',
+    images: Array.from({length: 4}, (_, i) => `/images/web/komega/${i + 1}.jpg`),
   },
 ];
 
@@ -73,6 +76,7 @@ const cardVariants = {
 
 export default function WebSection() {
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [activeProject, setActiveProject] = useState<any | null>(null);
 
   return (
     <section
@@ -156,21 +160,25 @@ export default function WebSection() {
                   </span>
                 </div>
 
-                {/* Screenshot Image with hover zoom */}
-                <img
-                  src={project.screenshot}
-                  alt={`${project.title} — превью сайта`}
-                  loading="lazy"
+                {/* Screenshot Interactive Gallery */}
+                <div 
+                  onClick={() => setActiveProject(project)}
                   style={{
                     width: '100%',
                     height: '100%',
-                    objectFit: 'cover',
-                    objectPosition: 'left top',
-                    transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease',
-                    transform: hoveredCard === project.id ? 'scale(1.03)' : 'scale(1)',
-                    filter: hoveredCard === project.id ? 'brightness(1.1)' : 'brightness(0.9)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    padding: '2rem 1rem',
+                    cursor: 'pointer'
                   }}
-                />
+                >
+                  <WebPreview 
+                    isHovered={hoveredCard === project.id} 
+                    accent={project.accent} 
+                    images={project.images} 
+                  />
+                </div>
               </div>
 
               {/* Content */}
@@ -292,7 +300,12 @@ export default function WebSection() {
           ))}
         </div>
       </div>
-
+      <Lightbox
+        images={activeProject?.images || []}
+        title={activeProject?.title || ''}
+        isOpen={!!activeProject}
+        onClose={() => setActiveProject(null)}
+      />
     </section>
   );
 }
