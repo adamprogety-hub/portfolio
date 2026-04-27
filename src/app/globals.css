@@ -588,12 +588,13 @@ body {
 }
 .web-project-preview {
   position: relative;
-  background: var(--bg);
+  background: #0a0a0a;
   border-right: 2px solid var(--border);
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   overflow: hidden;
+  min-height: 420px;
 }
 
 /* MegaCTA */
@@ -749,7 +750,8 @@ body {
   .web-project-preview {
     border-right: none !important;
     border-bottom: 2px solid var(--border) !important;
-    min-height: 200px !important;
+    min-height: 260px !important;
+    aspect-ratio: 16 / 9;
   }
 }
 

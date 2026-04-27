@@ -157,28 +157,20 @@ export default function WebSection() {
                 </div>
 
                 {/* Screenshot Image with hover zoom */}
-                <div
+                <img
+                  src={project.screenshot}
+                  alt={`${project.title} — превью сайта`}
+                  loading="lazy"
                   style={{
                     width: '100%',
                     height: '100%',
-                    overflow: 'hidden',
+                    objectFit: 'cover',
+                    objectPosition: 'left top',
+                    transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease',
+                    transform: hoveredCard === project.id ? 'scale(1.03)' : 'scale(1)',
+                    filter: hoveredCard === project.id ? 'brightness(1.1)' : 'brightness(0.9)',
                   }}
-                >
-                  <img
-                    src={project.screenshot}
-                    alt={`${project.title} — превью сайта`}
-                    loading="lazy"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      objectPosition: 'top center',
-                      transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease',
-                      transform: hoveredCard === project.id ? 'scale(1.05)' : 'scale(1)',
-                      filter: hoveredCard === project.id ? 'brightness(1.1)' : 'brightness(0.85)',
-                    }}
-                  />
-                </div>
+                />
               </div>
 
               {/* Content */}
