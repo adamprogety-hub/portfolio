@@ -3,7 +3,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useState, Suspense, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { PortfolioScene, GosLendScene, AspScene } from '../3d/WebScenes';
+import { PortfolioScene, GosLendScene, AspScene, KomegaScene } from '../3d/WebScenes';
 
 const webProjects = [
   {
@@ -27,9 +27,9 @@ const webProjects = [
     description:
       'Премиальный лендинг для компании по обработке земельных участков от клещей, борщевика и вредителей. 10 услуг, интерактивный квиз-калькулятор, секция команды и отзывов, Bento-grid UI, мобильный sticky CTA и SEO-оптимизация под Москву и МО.',
     stack: ['Next.js', 'React Three Fiber', 'GSAP', 'Tailwind', 'Supabase'],
-    url: 'https://green-space-five.vercel.app/',
+    url: 'https://portfolio-37do.vercel.app',
     accent: 'var(--accent-lime)',
-    displayUrl: 'green-space-five.vercel.app',
+    displayUrl: 'portfolio-37do.vercel.app',
     videoSrc: '/projects/gos-lend.mp4',
   },
   {
@@ -40,10 +40,23 @@ const webProjects = [
     description:
       'Сайт для компании экстренной уборки после смерти, пожара и затопления. Тёмный премиальный дизайн, 6 направлений услуг, протокол работы, блок «дилетанты = угроза» для формирования доверия, форма экстренной связи и Schema.org разметка.',
     stack: ['Next.js', 'Supabase', 'Framer Motion', 'SSR', 'Tailwind'],
-    url: 'https://www.xn--80aayyhihbc6bxc.xn--p1ai/',
+    url: 'https://portfolio-b2bo.vercel.app',
     accent: 'var(--accent-magenta)',
-    displayUrl: 'аурачистоты.рф',
+    displayUrl: 'portfolio-b2bo.vercel.app',
     videoSrc: '/projects/asp.mp4',
+  },
+  {
+    id: 'komega-lab',
+    title: 'КОМЕГА — 3D ЛАБОРАТОРИЯ',
+    subtitle: 'Интерактивный 3D-конфигуратор ПЛК',
+    scope: 'Дизайн / Код / 3D / Анимация / Хостинг',
+    description:
+      'Веб-лаборатория промышленных контроллеров МЗТА с интерактивным 3D-просмотром. Четыре модели ПЛК на вращающемся подиуме, HMI-дашборды на экранах контроллеров, кинематографические переходы между продуктами и детальные спецификации.',
+    stack: ['Next.js', 'React Three Fiber', 'GSAP', 'Tailwind', 'Vercel'],
+    url: 'https://komega.vercel.app',
+    accent: 'var(--accent-cyan)',
+    displayUrl: 'komega.vercel.app',
+    videoSrc: '/projects/komega.mp4',
   },
 ];
 
@@ -102,6 +115,8 @@ export default function WebSection() {
         return <GosLendScene isHovered={isHovered} clickSignal={clickSignal} />;
       case 'asp-cleaning':
         return <AspScene isHovered={isHovered} clickSignal={clickSignal} />;
+      case 'komega-lab':
+        return <KomegaScene isHovered={isHovered} clickSignal={clickSignal} />;
       default:
         return null;
     }

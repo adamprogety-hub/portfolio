@@ -465,3 +465,166 @@ export function PortfolioScene({ isHovered, clickSignal }: { isHovered: boolean;
     </group>
   );
 }
+
+// PREMIUM KOMEGA: Industrial PLC Controller Constellation
+export function KomegaScene({ isHovered, clickSignal }: { isHovered: boolean; clickSignal: number }) {
+  const groupRef = useRef<THREE.Group>(null);
+  const coreRef = useRef<THREE.Mesh>(null);
+  const modulesRef = useRef<THREE.Mesh[]>([]);
+  const screenRef = useRef<THREE.Mesh>(null);
+
+  const speed = useRef(1);
+  const isActive = useRef(false);
+  const activeProgress = useRef(0);
+
+  useEffect(() => {
+    if (clickSignal > 0) {
+      isActive.current = !isActive.current;
+    }
+  }, [clickSignal]);
+
+  const moduleCount = 8;
+  const moduleData = useMemo(() => {
+    const data = [];
+    for (let i = 0; i < moduleCount; i++) {
+      const angle = (i / moduleCount) * Math.PI * 2;
+      data.push({
+        angle,
+        radius: 2.0 + Math.random() * 0.8,
+        yOffset: (Math.random() - 0.5) * 1.5,
+        rotSpeed: 0.2 + Math.random() * 0.3,
+        scale: 0.3 + Math.random() * 0.4,
+      });
+    }
+    return data;
+  }, []);
+
+  useFrame((state, delta) => {
+    activeProgress.current = THREE.MathUtils.damp(
+      activeProgress.current,
+      isActive.current ? 1 : 0,
+      3,
+      delta
+    );
+
+    const targetSpeed = isActive.current ? 0.4 : isHovered ? 2.0 : 0.5;
+    speed.current = THREE.MathUtils.damp(speed.current, targetSpeed, 3, delta);
+
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.25 * speed.current;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.4) * 0.08;
+    }
+
+    // Core PLC box — elegant slow rotation with slight levitation
+    if (coreRef.current) {
+      coreRef.current.rotation.y += delta * 0.15 * speed.current;
+      coreRef.current.position.y = Math.sin(state.clock.elapsedTime * 1.5) * 0.1;
+    }
+
+    // HMI Screen glow
+    if (screenRef.current) {
+      const mat = screenRef.current.material as THREE.MeshPhysicalMaterial;
+      if (mat) {
+        const pulse = 1.5 + Math.sin(state.clock.elapsedTime * 3) * 0.5;
+        mat.emissiveIntensity = THREE.MathUtils.damp(
+          mat.emissiveIntensity,
+          isActive.current ? 6.0 : pulse,
+          4,
+          delta
+        );
+      }
+    }
+
+    // Orbiting satellite modules
+    const t = state.clock.elapsedTime;
+    const expand = activeProgress.current * 1.2;
+
+    modulesRef.current.forEach((mesh, i) => {
+      if (!mesh) return;
+      const data = moduleData[i];
+      const r = data.radius + expand;
+
+      mesh.position.x = Math.cos(t * data.rotSpeed + data.angle) * r;
+      mesh.position.y = data.yOffset + Math.sin(t * data.rotSpeed * 0.7) * 0.3;
+      mesh.position.z = Math.sin(t * data.rotSpeed + data.angle) * r;
+
+      mesh.rotation.x = t * 0.3;
+      mesh.rotation.z = t * 0.2;
+      mesh.scale.setScalar(data.scale);
+    });
+  });
+
+  return (
+    <>
+      <ambientLight intensity={1.5} color="#ffffff" />
+      <directionalLight position={[5, 8, 5]} intensity={4.0} color="#ffffff" />
+      <spotLight position={[-3, -5, 5]} intensity={2.0} color="#60a5fa" />
+      <pointLight position={[0, 0, 0]} intensity={3} color="#38bdf8" distance={8} />
+      <Environment preset="city" />
+
+      <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.4}>
+        <group ref={groupRef}>
+          {/* Main PLC Body — dark industrial box */}
+          <mesh ref={coreRef}>
+            <boxGeometry args={[1.2, 1.8, 0.6]} />
+            <meshStandardMaterial
+              color="#0a0a0a"
+              metalness={0.95}
+              roughness={0.12}
+            />
+          </mesh>
+
+          {/* HMI Display Screen */}
+          <mesh ref={screenRef} position={[0, 0.2, 0.31]}>
+            <planeGeometry args={[0.8, 0.5]} />
+            <meshPhysicalMaterial
+              color="#0ea5e9"
+              emissive="#0284c7"
+              emissiveIntensity={1.5}
+              roughness={0.1}
+              metalness={0.3}
+            />
+          </mesh>
+
+          {/* Terminal Strip — bottom accent */}
+          <mesh position={[0, -0.7, 0.31]}>
+            <boxGeometry args={[1.0, 0.15, 0.05]} />
+            <meshStandardMaterial
+              color="#22c55e"
+              emissive="#16a34a"
+              emissiveIntensity={0.5}
+              metalness={0.8}
+              roughness={0.2}
+            />
+          </mesh>
+
+          {/* Orbiting IO Modules */}
+          {moduleData.map((_, i) => (
+            <mesh
+              key={i}
+              ref={(el) => {
+                if (el) modulesRef.current[i] = el;
+              }}
+            >
+              <boxGeometry args={[0.5, 0.7, 0.25]} />
+              <meshStandardMaterial
+                color="#111111"
+                metalness={0.9}
+                roughness={0.15}
+              />
+            </mesh>
+          ))}
+        </group>
+      </Float>
+
+      <ContactShadows
+        position={[0, -3.0, 0]}
+        opacity={0.6}
+        scale={15}
+        blur={2.5}
+        far={5}
+        color="#000000"
+      />
+    </>
+  );
+}
